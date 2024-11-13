@@ -61,7 +61,6 @@ void display_table() {
 // Main function to run the program
 void main() { 
     int ch = 0; // Initialize choice variable
-    char name[26]; // Temporary storage for employee name
     initialize_table(); // Initialize the hash table  
 
     // Loop for user interaction until exit
