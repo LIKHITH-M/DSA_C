@@ -62,16 +62,21 @@ NODE* insert_left(NODE* first)
         scanf("%d",&data);
         temp=getnode();  // Create a new node
         cur=first;
-        while(cur->data != data)  // Traverse the list to find the node with the given data
+        while(cur->data != data && cur != NULL)  // Traverse the list to find the node with the given data
         {
             pre=cur;
             cur=cur->next;
         }
+if (cur == NULL) {
+    printf("Node with data %d not found.\n", data);
+    return first;
+}
+else{
         pre->next=temp;  // Link previous node's next to the new node
         temp->prev=pre;  // Update new node's previous pointer
         temp->next=cur;  // Link new node's next to the current node
         cur->prev=temp;  // Update current node's previous pointer
-    }
+    }}
     return first;  // Return the updated list
 }
 
