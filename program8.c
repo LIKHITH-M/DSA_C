@@ -1,12 +1,15 @@
 #include<stdio.h> 
 #include<stdlib.h>
+
+
 typedef struct node 
 { 
 int data; 
 struct node *left,*right; 
 int ht; 
 }NODE; 
- 
+
+
 int height(NODE *T) 
 { 
     if (T==NULL) 
@@ -23,7 +26,8 @@ int height(NODE *T)
            return(rheight + 1); 
     } 
 } 
- 
+
+
 int BF(NODE *T) 
 { 
   int lh,rh; 
@@ -39,20 +43,20 @@ int BF(NODE *T)
     rh=1+T->right->ht;  
 return(lh-rh); 
 } 
- 
+
+
 NODE * rotateright(NODE *x) 
 { 
   NODE *y; 
   y=x->left; 
   x->left=y->right; 
   y->right=x; 
- 
- 
   x->ht=height(x); 
   y->ht=height(y); 
   return y; 
 }  
- 
+
+
 NODE * rotateleft(NODE *x) 
 { 
   NODE *y; 
@@ -63,18 +67,21 @@ NODE * rotateleft(NODE *x)
   y->ht=height(y); 
   return y; 
 } 
+
  
 NODE* RR(NODE *T) 
 { 
 T=rotateleft(T); 
 return T; 
 }  
+
  
 NODE* LL(NODE *T) 
 { 
 T=rotateright(T); 
 return T; 
 } 
+
  
 NODE* LR(NODE *T) 
 { 
@@ -82,6 +89,7 @@ T->left=rotateleft(T->left);
 T=rotateright(T); 
 return T; 
 } 
+
  
 NODE* RL(NODE *T) 
 { 
@@ -89,7 +97,8 @@ T->right=rotateright(T->right);
 T=rotateleft(T); 
 return T; 
 } 
- 
+
+
 NODE* insert(NODE *T, int x) 
 { 
   if(T==NULL) 
@@ -97,8 +106,6 @@ NODE* insert(NODE *T, int x)
     T=(NODE*)malloc(sizeof(NODE)); 
     T->data=x; 
     T->left=T->right=NULL; 
- 
- 
   } 
   else 
   if(x > T->data) 
@@ -120,10 +127,10 @@ NODE* insert(NODE *T, int x)
     else 
     T=LR(T); 
   } 
-  T->ht=height(T); 
 return(T); 
 } 
- 
+
+
 void inorder(NODE *T) 
 { 
   if(T!=NULL) 
@@ -133,7 +140,8 @@ void inorder(NODE *T)
     inorder(T->right); 
   } 
 } 
- 
+
+
 int main() 
 { 
 NODE *root=NULL; 
