@@ -12,47 +12,52 @@
 // OUTPUT=” BASIC SCIENCE”
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <string.h>
 
-char str[100], pat[50], rep[50], ans[100];
-int i, j, c, m, k, flag = 0;
+void stringmatch(const char *str, const char *pat, const char *rep, char *ans) {
+    int i = 0, j = 0, c = 0, k;
 
-void stringmatch() {
-    i = m = c = j = 0; // Initialize all variables
     while (str[c] != '\0') {
         if (str[c] == pat[i]) {
             i++;
-            m++;
-            if (pat[i] == '\0') {
-                flag = 1;
-                for (k = 0; rep[k] != '\0'; k++, j++)
-                    ans[j] = rep[k];
+            if (pat[i] == '\0') { // Complete match found
+                for (k = 0; rep[k] != '\0'; k++) {
+                    ans[j++] = rep[k];
+                }
                 i = 0; // Reset pattern index
-                c = m; // Update the current index
+                c++;   // Move to the next character in the string
+            } else {
+                c++;
             }
         } else {
-            ans[j] = str[c]; // Store the current character in ans
-            j++;
-            c++;
-            m = c; // Move to the next character in str
+            // No match, reset pattern index and add current character to ans
+            if (i > 0) {
+                int l;
+                for (l = 0; l < i; l++) {
+                    ans[j++] = pat[l];
+                }
+                i = 0; // Reset pattern index
+            }
+            ans[j++] = str[c++];
         }
     }
+
+    // Add remaining unmatched part of the pattern
+    while (i > 0 && pat[--i] != '\0') {
+        ans[j++] = pat[i];
+    }
+
     ans[j] = '\0'; // Null terminate the resultant string
 }
 
 int main() {
-    printf("Enter a main string \n");
-    fgets(str, sizeof(str), stdin); // Use fgets instead of gets
-    printf("Enter a pattern string \n");
-    fgets(pat, sizeof(pat), stdin); // Use fgets instead of gets
-    printf("Enter a replace string \n");
-    fgets(rep, sizeof(rep), stdin); // Use fgets instead of gets
+    const char str[] = "ababcabc";
+    const char pat[] = "abc";
+    const char rep[] = "123";
+    char ans[100]; // Make sure ans is large enough to hold the result
 
-    stringmatch();
-    if (flag == 1)
-        printf("The resultant string is\n%s", ans);
-    else
-        printf("Pattern string NOT found\n");
+    stringmatch(str, pat, rep, ans);
+    printf("Result: %s\n", ans);
 
-    return 0; // Return an integer from main
+    return 0;
 }
